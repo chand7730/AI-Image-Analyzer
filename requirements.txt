@@ -4,3 +4,4 @@ numpy
 pillow
 transformers
 torch
+ultralytics
