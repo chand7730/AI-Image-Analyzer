@@ -317,9 +317,27 @@ else:
 
 # ---------- Footer ----------
 st.divider()
-st.markdown(
-    "<p style='text-align:center;color:#56806a;'>"
-    "🌿 AI Image Analyzer · Powered by OpenCV, ViT & YOLO"
-    "</p>",
-    unsafe_allow_html=True
-)
+
+st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #087f4f, #16a36a);
+    padding: 24px;
+    border-radius: 18px;
+    text-align: center;
+    color: white;
+">
+    <h2 style="color: white; margin-bottom: 8px;">
+        🌿 AI Image Analyzer
+    </h2>
+    <p style="color: #e8fff1;">
+        Powered by OpenCV, ViT &amp; YOLO
+    </p>
+    <hr style="border-color: #a6e5c0;">
+    <p style="color: white; margin-bottom: 4px;">
+        Developed by <strong>Chand Yousaf</strong>
+    </p>
+    <p style="color: #e8fff1; font-size: 13px;">
+        AI-Powered Image Processing &amp; Object Detection
+    </p>
+</div>
+""", unsafe_allow_html=True)
