@@ -334,6 +334,22 @@ else:
                         caption="YOLO Detection Results",
                         use_container_width=True
                     )
+                    
+                    import io
+
+                    yolo_buffer = io.BytesIO()
+                    Image.fromarray(detected_image).save(
+                        yolo_buffer, format="PNG"
+                    )
+
+                    st.download_button(
+                        label="⬇️ Download YOLO Detection Image",
+                        data=yolo_buffer.getvalue(),
+                        file_name="yolo_detection_result.png",
+                        mime="image/png",
+                        key="download_yolo"
+                    )
+
 
                     boxes = result.boxes
 
