@@ -193,6 +193,55 @@ else:
 
         # OpenCV results
         st.markdown("## 📷 Image Processing")
+        download_col1, download_col2 = st.columns(2)
+
+        with download_col1:
+            st.download_button(
+                label="⬇️ Download Original Image",
+                data=uploaded_file.getvalue(),
+                file_name="original_image.png",
+                mime="image/png",
+                key="download_original"
+            )
+
+        with download_col2:
+            processed_image = Image.fromarray(bright_rgb)
+            import io
+            image_buffer = io.BytesIO()
+            processed_image.save(image_buffer, format="PNG")
+
+            st.download_button(
+                label="⬇️ Download Brightness Image",
+                data=image_buffer.getvalue(),
+                file_name="brightness_image.png",
+                mime="image/png",
+                key="download_brightness"
+            )
+
+        gray_image = Image.fromarray(gray)
+        gray_buffer = io.BytesIO()
+        gray_image.save(gray_buffer, format="PNG")
+
+        st.download_button(
+            label="⬇️ Download Grayscale Image",
+            data=gray_buffer.getvalue(),
+            file_name="grayscale_image.png",
+            mime="image/png",
+            key="download_grayscale"
+        )
+
+        edge_image = Image.fromarray(edges)
+        edge_buffer = io.BytesIO()
+        edge_image.save(edge_buffer, format="PNG")
+
+        st.download_button(
+            label="⬇️ Download Edge Detection Image",
+            data=edge_buffer.getvalue(),
+            file_name="edge_detection.png",
+            mime="image/png",
+            key="download_edges"
+        )
+
         tab1, tab2, tab3, tab4 = st.tabs([
             "Original", "Grayscale", "Brightness", "Edges"
         ])
