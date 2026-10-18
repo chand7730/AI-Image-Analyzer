@@ -126,6 +126,29 @@ with st.sidebar:
         step=5
     )
     st.caption("Move the slider to adjust image brightness.")
+  
+# ---------- Analysis History ----------
+if "analysis_history" not in st.session_state:
+    st.session_state.analysis_history = []
+
+with st.sidebar:
+    st.divider()
+    st.markdown("## 📜 Analysis History")
+
+    if st.session_state.analysis_history:
+        st.caption("Recent AI analysis results")
+
+        for i, item in enumerate(
+            reversed(st.session_state.analysis_history)
+        ):
+            st.markdown(
+                f"**{len(st.session_state.analysis_history) - i}.** "
+                f"{item['type']}"
+            )
+            st.caption(item["result"])
+
+    else:
+        st.info("Your analysis results will appear here.")
 
 # ---------- Main App ----------
 if uploaded_file is None:
@@ -287,6 +310,19 @@ else:
                 try:
                     classifier = load_classifier()
                     predictions = classifier(image, top_k=5)
+                    
+                    history_result = ", ".join(
+                        [
+                            f"{item['label']} ({item['score'] * 100:.1f}%)"
+                            for item in predictions
+                        ]
+                    )
+
+                    st.session_state.analysis_history.append({
+                        "type": "🧠 ViT Classification",
+                        "result": history_result
+                    })
+
 
                     st.success("Image classification completed!")
 
@@ -357,6 +393,23 @@ else:
                         st.success(
                             f"Detected {len(boxes)} object(s)."
                         )
+                        
+                        yolo_history_result = []
+
+                        for box in boxes:
+                            class_id = int(box.cls[0].item())
+                            confidence = float(box.conf[0].item())
+                            name = result.names[class_id]
+
+                            yolo_history_result.append(
+                                f"{name} ({confidence * 100:.1f}%)"
+                            )
+
+                        st.session_state.analysis_history.append({
+                            "type": "🎯 YOLO Object Detection",
+                            "result": ", ".join(yolo_history_result)
+                        })
+
 
                         for box in boxes:
                             class_id = int(box.cls[0].item())
